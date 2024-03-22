@@ -54,3 +54,9 @@ if request_line == "GET / HTTP/1.1" {
 ![image](https://github.com/Samuelwidjaja/advprog-modul6/assets/119392779/20e4af88-3a62-4701-be08-fcf5811f2355)
 
 Refaktorisasi diperlukan untuk mengurangi duplikasi kode. Dengan menggunakan pendekatan ini, blok `if` dan `else` hanya membedakan `status_line` dan nama file, sementara variabel lain dikeluarkan dari blok kondisional, menjadikan kode lebih ringkas dan terorganisir.
+
+*4. How do /sleep works? Why it works like that?*
+
+Fungsi `/sleep` pada endpoint ini menggunakan `std::thread::sleep(Duration::from_secs(10))` untuk melakukan jeda selama 10 detik sebelum menghasilkan respons. Ini berarti bahwa saat permintaan ditangani, server akan berhenti selama 10 detik sebelum mengirimkan respons kembali.
+
+Server menangani permintaan secara berurutan karena program ini masih menggunakan satu thread. Artinya, ketika server sedang menangani permintaan `/sleep`, ia tidak dapat menangani permintaan lain secara bersamaan. Oleh karena itu, bahkan jika Anda mengubah endpoint dari `/sleep` ke `/`, masih akan mengalami penundaan selama 10 detik karena harus menunggu permintaan `/sleep` saat itu selesai dijalankan.
