@@ -68,7 +68,9 @@ ThreadPool adalah sekelompok thread yang telah dibuat sebelumnya dan siap untuk 
 Dengan adanya ThreadPool, server dapat memproses banyak permintaan secara bersamaan, meningkatkan throughput secara keseluruhan. Dalam kasus program ini, jumlah thread yang dibuat dibatasi hingga 4, sehingga server tidak akan menjadi overload meskipun menerima banyak permintaan. Bahkan jika ada permintaan untuk `/sleep`, server masih dapat menangani permintaan lain karena masih ada thread yang tersedia untuk menjalankannya.
 
 *Bonus*
+
 *Compare function build and new*
+
 Saya memperbarui ThreadPool dengan menggunakan fungsi `build` sebagai pengganti fungsi `new` sebelumnya, sesuai dengan pedoman yang ada dalam Rust Book Chapter 12. Perbedaan utama antara penggunaan fungsi `build` dan `new` terletak pada penanganan kesalahan. Fungsi `new` sebelumnya diasumsikan akan selalu berhasil dalam membuat ThreadPool, sementara fungsi `build` memeriksa terlebih dahulu apakah ThreadPool berhasil dibuat atau tidak. Jika tidak berhasil, fungsi `build` akan mengembalikan pesan kesalahan, dan program tidak akan melanjutkan eksekusi.
 
 Contohnya, jika ukuran ThreadPool yang diminta adalah 0 atau negatif (yang berarti tidak ada jumlah thread yang valid), fungsi `build` akan mengembalikan pesan kesalahan dan program tidak akan berjalan. Hal ini dilakukan dengan menambahkan kondisional pada fungsi `build` untuk menangani kasus di mana ukuran thread tidak sesuai.
