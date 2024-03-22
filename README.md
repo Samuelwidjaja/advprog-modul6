@@ -60,3 +60,9 @@ Refaktorisasi diperlukan untuk mengurangi duplikasi kode. Dengan menggunakan pen
 Fungsi `/sleep` pada endpoint ini menggunakan `std::thread::sleep(Duration::from_secs(10))` untuk melakukan jeda selama 10 detik sebelum menghasilkan respons. Ini berarti bahwa saat permintaan ditangani, server akan berhenti selama 10 detik sebelum mengirimkan respons kembali.
 
 Server menangani permintaan secara berurutan karena program ini masih menggunakan satu thread. Artinya, ketika server sedang menangani permintaan `/sleep`, ia tidak dapat menangani permintaan lain secara bersamaan. Oleh karena itu, bahkan jika Anda mengubah endpoint dari `/sleep` ke `/`, masih akan mengalami penundaan selama 10 detik karena harus menunggu permintaan `/sleep` saat itu selesai dijalankan.
+
+*5. How the ThreadPool works?*
+
+ThreadPool adalah sekelompok thread yang telah dibuat sebelumnya dan siap untuk menangani tugas. Mereka berfungsi seperti sekelompok pekerja yang sudah tersedia untuk melakukan pekerjaan. Saat program menerima tugas baru, tugas tersebut dialokasikan kepada salah satu pekerja, yang kemudian akan menyelesaikan tugas tersebut. Sementara itu, pekerja lain tetap siap untuk menerima dan menangani tugas lain yang mungkin masuk, sehingga memungkinkan untuk menyelesaikan banyak tugas secara bersamaan.
+
+Dengan adanya ThreadPool, server dapat memproses banyak permintaan secara bersamaan, meningkatkan throughput secara keseluruhan. Dalam kasus program ini, jumlah thread yang dibuat dibatasi hingga 4, sehingga server tidak akan menjadi overload meskipun menerima banyak permintaan. Bahkan jika ada permintaan untuk `/sleep`, server masih dapat menangani permintaan lain karena masih ada thread yang tersedia untuk menjalankannya.
